@@ -1,0 +1,269 @@
+node --version
+npm --version
+
+npx create-react-app my-app
+
+npx create-react-app textutils
+
+npm start
+
+App.js:
+
+import logo from './logo.svg';
+import './App.css';
+
+let name = "Pooja Pal"; //variable name is used inside jsx as curly bracket
+function App() {
+  return (
+    <>
+    <nav>
+      <li>Home</li>
+      <li>About</li>
+      <li>Contact</li>
+    </nav>
+    <div className='container'>
+      <h1>
+        Hello {name} 
+      </h1>
+      <p>
+      In real time : we will not mention user or group mail directly in workspace:
+Instead we will have Azure active directory group: we will create directory for viewers, Member and admin
+      </p>
+
+    </div>
+  
+    </>
+  );
+}
+
+export default App;
+
+
+
+
+
+we can add node_modules folder in .gitignore as it is not necessay to store that. Whoever uses code can install these modules:
+npm install
+
+how to add Bootstrap: 
+
+CSS Bootstrap: title tag ke upar in index.html
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+JS Bootstrap: in body tag in index.html
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+
+git add .
+
+git commit -m "Video 5"
+
+
+--------------Video 6: Props---------------------
+
+No need to import react in app.js as we are funtion function based component.
+
+named export and default export: refer module1.mjs and module2.mjs in projects textutils.
+
+node ./module2.mjs
+
+1st customeised component:
+create folder Components in src folder
+create file named Navbar.js
+type rfc: to get react component syntax:
+then add statement: Hello, i am navbar " inside div tags
+use <navbar/> tag in App.js: it will automatically import ./components/navbar.js in code just by typing tag.
+
+
+Props is nothing but properties: aapne ek component bnaya(navbar.js): ab aap uss component ke andar kuch chize paas krna chahte h, saying bhai ye "Component h but with some variables h" jo ki main btaunga kya honge. 
+
+<Navbar title = "TextUtils" abouttext="About Textutils"/> in App.js
+
+navbar.js:
+export default function Navbar(props) //----> passing props in bracket.
+<a className="navbar-brand" href="/">{props.title}</a> // dynamic title name
+<a className="nav-link" href="/">{props.abouttext}</a> //dynamic about us tab.
+
+
+PROPS are READ ONLY, u must not changes in function.
+
+
+PROP type: type impt and enter: extension ka kamaal(ES7 extension)
+
+import PropTypes from 'prop-types'
+
+at the end in navbar.js: this is needed so that we paas exact data type in App.js
+Navbar.propTypes= {title: PropTypes.string,
+                    abouttext: PropTypes.string}
+					
+<Navbar title = 3 abouttext="About Textutils"/> in App.js	--> this will fail when we inspect our page: as we have defined tittle proptype as String and we are passing number.
+
+
+DefaultProps in function based component: It is needed if no value is passed, in such case, pls use default props.
+
+app.js:
+				
+///{/* <Navbar title = "TextUtils" abouttext="About Textutils"/> */} we wil not pass argument when we need default props
+<Navbar/>
+
+navbar.js:
+
+Navbar.defaultProps = {
+    title: 'set title here',
+    abouttext: 'abouts us here'
+}
+
+-----isrequired keyword: better to keep isrequired in prop to check undefined objects
+
+Navbar.propTypes= {title: PropTypes.string.isrequired,
+                    abouttext: PropTypes.string}
+
+
+<Navbar/>
+
+also comment default prop to see this failure when giving isrequired
+
+Warning: Failed prop type: The prop `title` is marked as required in `Navbar`, but its value is `undefined`.
+    at Navbar (http://localhost:3000/static/js/bundle.js:107:25)
+    at App
+	
+-----------------Video 7: State and Events-----------
+What I learned today from this video are:
+i. Created a new component named Textform and used it in app.js
+ii. Imported and used a 'useState' react hook in order to change the value of text according to the state.
+iii. Created and used two arrow functions for responding to the onClick event of the button and onChange event of the textarea.
+
+
+
+
+ek componentbnaya Textform naam ka usme ek 
+
+import React, {useState} from 'react'
+
+useState is one of the hook in react:
+const [text, setText] = useState('Enter text here');
+
+text is a variable, settext acts as function.
+u cannot directly assigne value to variable, u need function setText:
+    // text="numnebd"; //Wrong way to change the   state variable
+    // setText("Enter new text");//correct way to change state 
+
+<textarea className="form-control" value={text} onChange={handleOnChange} id="mybox" rows='8'></textarea>
+
+{text} is state variable
+{handleOnChange} is arrow function.
+
+    const handleOnChange = (event) =>{
+        console.log("On change");
+        setText(event.target.value); #It will set latest value to text after change.
+    } ; 
+
+onClick={handleUprcaseClick}
+for this we have arrow function defined as below:
+    const handleUprcaseClick = () =>{
+        console.log("uppercase was clicked");
+        let newtext = text.toUpperCase();
+        setText("newText");
+    } ;
+	
+	
+----------Video 8: enhancing page-----
+
+word count not working on new line, only working where there is space.
+
+set dark nav bar:  <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+btn btn-outline-primary
+
+primary: blue, succes-green,fail: red in bootstrap
+
+remove outline:filled blue search will come:
+btn btn-primary
+
+these all things of bootstrap is difficult to remember: refer doc> component> button, textare etc for respective tags
+
+
+
+
+----------------Video 10: new component About.js-------
+
+bootstrap se Accordion wala script uthaya
+
+Enabling Dark Mode:
+
+1. add button before container completes second last line in function based component
+
+Today we created a component named About.Js and then added the contents inside it from bootstrap. 
+Then we created different states to change the style of the page from light to dark theme and to change the text of the button accordingly.
+
+------------------Video 11: Enable dark mode on Entire projects--------
+
+I want to manage whole state of my app using app.js eg having Dark mode enable/diable,all variable must be in app.js
+  
+in App.js:
+
+  const [mode, setmode] =  useState(false);
+  
+in Navbar: Add switch using Bootstrap
+        <div className={`form-check form-switch text-{props.mode}`}>
+        <input className="form-check-input" onClick={props.toggelMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>  
+
+here we are using many props like: mode and tooglemode
+also we are applying ternary operator condition to swicth text "Enable mode"
+        <div className={`form-check form-switch text-${props.mode==='light'?'dark':'light' }`}>
+        <input className="form-check-input" onClick={props.toggelMode} type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Enable Dark Mode</label>
+
+Note: $ in {} means that it is variable.
+`(backtick) use kia in javascript to we can use any variable inside using $, same like in unix
+and variable has ternanry operator: ${props.mode==='light'?'dark':'light'
+
+Point to be noted: we have created state variable in App.js and is used in components.
+
+----------------------------------------------------------------------------------------------
+-----------Video 13: Diminishing alert on Sucess of Dark mode, light mode msg, etc----------
+
+learned new thing : && operator if we have set state as null eg prop.alert initially is null.
+
+setTimeout in showAlert function: it is used to close tha alert after sometime, so that we dont have to refresh our page to remove alert: Alert tanga hua nhi rehna chahiye for that purpose.
+
+---------------------------------------------------------------------------------------
+
+-------------Video 16: react router-------
+ package: https://v5.reactrouter.com/web/guides/quick-start
+ 
+
+npm install react-router-dom
+
+a and href ki jagah link and to use krna h in all componenet like navbar.js, textform.js etc, so that page wont get reloaded everytime
+always use "exact path" in router as react does partial match 
+/user/home ----> renders component 1
+/user ----> renders component 2 but it might render componenet 1 as react does partial match, hence it is best practise to have exact keyword.
+
+
+
+Question to :
+
+1. for creating form: the tutorial I was watching is using Bootstrap: both js and css related cdn link add kia h in index.html	
+how abt real time project in UBS? actual HTML and CSS likhte h kya ?
+
+2. IDE konse use ho rhe h ? VScode or anything else ? VScode has many extensions that is quite helpful like rpc likha toh react ka default function based component bn jata h. clg likha toh console.log aa jata h, etc
+
+3. Need to check various components, props in those components etc.
+
+4. Webpage local host pr h(http://localhost:3000/) , actual wala like abc.org: aisa kuch kahan dete h ?
+
+
+To DO:
+
+1. word count not working on new line, only working where there is space.
+2. handlecopy arrow function in textform.js component.
+3. text area, backgroud coloe and font color are not getting updated, taking default one:
+
+
+style={{backgroundColor:props.mode==='dark'?'grey':'white',Color: props.mode==='dark'?'white':'black'}}
+
+
+4. having extra space in this case, capitalise is not working...need to check this as well.
+
